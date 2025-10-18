@@ -3,6 +3,7 @@
 const readline = require('node:readline')
 const { stdin: input, stdout: output }  =  require('node:process')
 const dialog = readline.createInterface({ input, output })
+const number = random
 
 const startMessage = 'Введите цифру     (1 - Поприветсвует Вас, 2 - Случайное число, 3 - Выход, 4 - Игра Угадай Число):\n'
 function startBot () {
@@ -17,7 +18,7 @@ function startBot () {
                 startBot()
                 break
             case '3':
-                console.log('Досвидания ! Спасибо За Использование бота') //Ввыводит при вводе 3 прощание с пользователем и завершает программу
+                console.log('До свидания ! Спасибо За Использование бота') //Ввыводит при вводе 3 прощание с пользователем и завершает программу
                 dialog.close()
                 break    
             case '4':
@@ -32,16 +33,25 @@ function startBot () {
         }
     })
 }
-const random = (`Случайное число:${ Math.floor(Math.random() * 6) + 1}`)  
+function random () {
+    return Math.floor(Math.random() * 6) + 1
+}  
+function game() {
+    const number = random()
+
+    dialog.question('Угадай число от 1 до 6: ', function( answer ) {
+        const userInput = parseInt(answer, 10)
     
-    function game() {
-        if (random === input) {
-            dialog.question( function(answer)  {
-                console.log('Ваш ответ')
-            } )
-            console.log('Вы угадали !')
+        if (userInput === number) {
+            console.log('Вы угадали!')
         } else {
-            console.log('К сожелению вы не угадали :(')
+            console.log(`К сожалению вы проиграли, правильный ответ был ${number}`)
         }
-    }
-startBot()
+
+        startBot()
+    })
+}
+
+
+
+startBot() 
